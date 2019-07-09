@@ -1,3 +1,7 @@
+// based on libraries created by
+// Gonzalo Recio (grsynth.com)
+// Robo Ulbricht (arduinoslovakia.eu/page/ad9850-generator-signalov)
+
 //interchangeable pins
 #define AD9850_clk 4
 #define AD9850_fqud 7
