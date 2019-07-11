@@ -1,3 +1,18 @@
+//    Arduino connections:
+//
+//  |ADS1220 pin label| Pin Function         |Arduino Connection|
+//  |-----------------|:--------------------:|-----------------:|
+//  | DRDY            | Data ready Output pin|  D6              |
+//  | MISO            | Slave Out            |  D12             |
+//  | MOSI            | Slave In             |  D11             |
+//  | SCLK            | Serial Clock         |  D13             |
+//  | CS              | Chip Select          |  D7              |
+//  | DVDD            | Digital VDD          |  +5V             |
+//  | DGND            | Digital Gnd          |  Gnd             |
+//  | AN0-AN3         | Analog Input         |  Analog Input    |
+//  | AVDD            | Analog VDD           |  -               |
+//  | AGND            | Analog Gnd           |  -               |
+
 #include <Protocentral_ADS1220.h>
 #include <SPI.h>
 
