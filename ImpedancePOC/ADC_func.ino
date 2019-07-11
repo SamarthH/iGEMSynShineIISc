@@ -23,7 +23,7 @@ void loop(){
 int init_adc(){   //Run this inside setup()
     pc_ads1220.begin(ADS1220_CS_PIN,ADS1220_DRDY_PIN);
 
-    pc_ads1220.set_data_rate(DR_330SPS);
+    pc_ads1220.set_data_rate(DR_1000SPS);
     pc_ads1220.set_pga_gain(PGA_GAIN_1);
 
     pc_ads1220.set_conv_mode_single_shot(); //Set Single shot mode
