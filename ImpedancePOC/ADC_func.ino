@@ -31,17 +31,34 @@ int init_adc(){   //Run this inside setup()
 
 long read_val_adc(int a){
   if(a > -1 && a < 5){
+    adc_data = 0;
     if(a == 0){
-      return pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH0);
+      for(int i = 0; i< 1000; i++){ //1000 * delay(1) leads to averaging for 1s
+        adc_data += pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH0);
+        delay(1);
+      }
+      return adc_data/1000;
     }
     else if(a==1){
-      return pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH1);
+      for(int i = 0; i< 1000; i++){
+        adc_data += pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH1);
+        delay(1);
+      }
+      return adc_data/1000;
     }
     else if(a==2){
-      return pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH2);
+      for(int i = 0; i< 1000; i++){
+        adc_data += pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH2);
+        delay(1);
+      }
+      return adc_data/1000;
     }
     else if(a==3){
-      return pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH3);
+      for(int i = 0; i< 1000; i++){
+        adc_data += pc_ads1220.Read_SingleShot_SingleEnded_WaitForData(MUX_SE_CH3);
+        delay(1);
+      }
+      return adc_data/1000;
     }
   }
   else{
