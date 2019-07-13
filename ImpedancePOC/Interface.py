@@ -66,7 +66,8 @@ def sendMsg(msg):
                         if ser.read()==a:
                             break
             elif FL=='E':
-                pass
+                ser.reset_input_buffer()
+                sendMsg(msg)
             else:
                 return None
 
