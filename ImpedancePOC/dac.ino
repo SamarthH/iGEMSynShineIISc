@@ -3,10 +3,10 @@
 // Robo Ulbricht (arduinoslovakia.eu/page/ad9850-generator-signalov)
 
 //interchangeable pins
-#define AD9850_clk 4
-#define AD9850_fqud 7
-#define AD9850_data 8
-#define AD9850_reset 12
+#define AD9850_clk 18
+#define AD9850_fqud 17
+#define AD9850_data 16
+#define AD9850_reset 15
 
 //Frequency of your crystal oscillator (CLKIN input pin 9 in datasheet), measured in MHz.
 // This reference frequency must be higher than 1MHz.
@@ -54,7 +54,6 @@ pinMode(FQ_UD, OUTPUT);
 pinMode(DATA, OUTPUT);
 pinMode(RESET, OUTPUT);
 }
-
 int AD9850::init()
 {
 digitalWrite(W_CLK, LOW);
@@ -273,6 +272,9 @@ device.init();
 device.doReset();
 }
 
+int set_val(long f){
+  return setval(device,f);
+}
 
 void loop()
 {
