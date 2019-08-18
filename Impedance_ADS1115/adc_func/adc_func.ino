@@ -36,7 +36,7 @@ long read_val_adc(int a) // If a = 1, gives V_(01) else if a = 2, gives V_(23)
 {
   if(a == 1)
   {
-    return ads.readADC_Differential_0_1()
+    return ads.readADC_Differential_0_1();
   }
   else if(a == 2)
   {
