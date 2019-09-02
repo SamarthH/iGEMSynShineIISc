@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include <Adafruit_ADS1015.h>
+#include <math.h>
 
 float Multiplier = 0.1875;
 
@@ -109,6 +110,42 @@ int set_gain(int a)
     return -1;
   }
   return 0;
+}
+
+int adc_reading(){
+  int expc_gain = 1;                //The index of the set_gain function
+  //long max_vol[5] = {4.096, 2.048, 1.024, 0.512, 0.256};
+  
+  long val = read_val_adc(expc_gain);
+  if(val<0){
+    val*=-1;
+  }
+  
+  long threshold = 0.4*((int)pow(2, 15));
+  
+  while(expc_gain<=6){
+    set_gain(expc_gain);
+    if(val>threshold){
+      break;
+    }
+    expc_gain++;
+    val = read_val_adc(expc_gain);
+    if(val<0){
+      val*=-1;
+    }
+  }
+  
+  if(expc_gain==7){
+    expc_gain = 1;
+    set_gain(expc_gain);
+  }
+  
+  long avg = 0;
+  for(int i=0; i<100; i++){
+    avg+=read_val_adc(expc_gain);
+  }
+  avg/=100;
+  Serial.println(avg);
 }
 
 void setup(void)
