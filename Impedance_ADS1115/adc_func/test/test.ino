@@ -59,11 +59,11 @@ long read_val_adc(int a) // If a = 1, gives V_(01) else if a = 2, gives V_(23)
 {
   if(a == 1)
   {
-    return ads.readADC_Differential_0_1();
+    return (long)ads.readADC_Differential_0_1();
   }
   else if(a == 2)
   {
-    return ads.readADC_Differential_2_3();
+    return (long)ads.readADC_Differential_2_3();
   }
   else
   {
@@ -111,7 +111,7 @@ int set_gain(int a)
   return 0;
 }
 
-long adc_reading(){
+long adc_reading(double* gain, double* V_true){
   int expc_gain = 1;                //The index of the set_gain function
   //long max_vol[5] = {4.096, 2.048, 1.024, 0.512, 0.256};
   
@@ -120,9 +120,9 @@ long adc_reading(){
     val*=-1;
   }
   
-  long threshold = (0.4*(1<<15));
+  long threshold = ((1<<13));
   
-  while(expc_gain<6){
+  while(expc_gain<5){
     set_gain(expc_gain);
     if(val>threshold){
       break;
@@ -141,14 +141,22 @@ long adc_reading(){
 */  
   long avg = 0;
   for(int i=0; i<100; i++){
-    avg+=read_val_adc(expc_gain);
+    avg+=read_val_adc(1);
   }
-  avg/=100;
-  if(expc_gain = 1){
+  *V_true = Multiplier*avg/100.0;
+  avg /= 100;
+  if(expc_gain == 1){
     avg*=24; 
   }
   else{
     avg = (avg<<(6-expc_gain));
+  }
+  if(expc_gain == 1){
+    *gain = 0.66;
+  }
+  else{
+    long k = 1<<(expc_gain-2);
+    *gain = (double)k;
   }
   set_gain(1);
   return avg;
@@ -163,8 +171,9 @@ void setup(void)
 
 void loop(void)
 {
-  long x = adc_reading();
-  double y = x*0.0078125;
-  Serial.print("Gain = "); Serial.print(Multiplier); Serial.print(" 1.Differential: "); Serial.print(x); Serial.print("("); Serial.print(y); Serial.println("mV)");
+  double gain;
+  double y;
+  long x = adc_reading(&gain,&y);
+  Serial.print("Gain = "); Serial.print(gain); Serial.print(" 1.Differential: "); Serial.print(x); Serial.print("("); Serial.print(y); Serial.println("mV)");
   delay(1000);
 }
